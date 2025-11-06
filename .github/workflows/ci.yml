@@ -1,0 +1,13 @@
+name: svc-search-ci
+on:
+  push:
+    branches: [ main ]
+permissions:
+  contents: read
+  packages: write
+jobs:
+  build:
+    uses: jagadeesh-ml/platform/.github/workflows/reusable-ci.yml@main
+    with:
+      service_name: svc-search
+      path_filter: .
