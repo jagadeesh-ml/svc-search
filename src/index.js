@@ -1,8 +1,19 @@
 import express from 'express';
+
 const app = express();
-
-app.get('/healthz', (_req, res) => res.json({ service: 'search', status: 'running' }));
-app.get('/', (_req, res) => res.send('search service'));
-
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, '0.0.0.0', () => console.log(`search listening on ${PORT}`));
+const SERVICE = process.env.SERVICE_NAME || 'unknown';
+
+// Simple root for quick checks
+app.get('/', (_req, res) => {
+  res.status(200).send(`${SERVICE} service`);
+});
+
+// Consistent JSON health
+app.get('/healthz', (_req, res) => {
+  res.status(200).json({ service: SERVICE, status: 'running' });
+});
+
+app.listen(PORT, () => {
+  console.log(`${SERVICE} listening on ${PORT}`);
+});
